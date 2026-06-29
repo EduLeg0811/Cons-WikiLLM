@@ -1,0 +1,16 @@
+# Node / web
+web/node_modules
+web/dist
+web/.vite
+*.local
+
+# Python
+__pycache__/
+*.pyc
+.venv
+
+# Obsidian
+.obsidian/workspace*.json
+
+# Editor
+.vscode

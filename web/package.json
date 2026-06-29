@@ -1,0 +1,31 @@
+{
+  "name": "wiki-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5",
+    "@fontsource-variable/playfair-display": "^5",
+    "motion": "^12",
+    "react": "^19",
+    "react-dom": "^19",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7",
+    "remark-gfm": "^4.0.1",
+    "sonner": "^2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite": "^8"
+  }
+}

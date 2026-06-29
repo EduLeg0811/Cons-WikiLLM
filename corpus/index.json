@@ -1,0 +1,109 @@
+{
+  "description": "Indice das fontes canonicas do corpus (regenerado a partir dos metadados internos de cada JSON).",
+  "sources": [
+    {
+      "index_id": "200teat",
+      "file": "200teat.json",
+      "book_name": "200 Teaticas da Conscienciologia",
+      "author": "Waldo Vieira",
+      "records": 1945,
+      "index_label": "200 Teaticas da Conscienciologia"
+    },
+    {
+      "index_id": "700exp",
+      "file": "700exp.json",
+      "book_name": "700 Experimentos da Conscienciologia",
+      "author": "Waldo Vieira",
+      "records": 4019,
+      "index_label": "700 Experimentos da Conscienciologia"
+    },
+    {
+      "index_id": "ccg",
+      "file": "ccg.json",
+      "book_name": "Conscienciograma",
+      "author": "Waldo Vieira",
+      "records": 1980,
+      "index_label": "Conscienciograma"
+    },
+    {
+      "index_id": "dac",
+      "file": "dac.json",
+      "book_name": "Dicionario de Argumentos da Conscienciologia",
+      "author": "Waldo Vieira",
+      "records": 4804,
+      "index_label": "Dicionario de Argumentos da Conscienciologia"
+    },
+    {
+      "index_id": "dupla",
+      "file": "dupla.json",
+      "book_name": "Manual da Dupla Evolutiva",
+      "author": "Waldo Vieira",
+      "records": 783,
+      "index_label": "Manual da Dupla Evolutiva"
+    },
+    {
+      "index_id": "ec",
+      "file": "ecwv.json",
+      "book_name": "Enciclopedia da Conscienciologia",
+      "author": "Waldo Vieira",
+      "records": 2019,
+      "index_label": "Enciclopedia da Conscienciologia"
+    },
+    {
+      "index_id": "hsp",
+      "file": "hsp.json",
+      "book_name": "Homo sapiens pacificus",
+      "author": "Waldo Vieira",
+      "records": 6965,
+      "index_label": "Homo sapiens pacificus"
+    },
+    {
+      "index_id": "hsr",
+      "file": "hsr.json",
+      "book_name": "Homo sapiens reurbanisatus",
+      "author": "Waldo Vieira",
+      "records": 8407,
+      "index_label": "Homo sapiens reurbanisatus"
+    },
+    {
+      "index_id": "lo",
+      "file": "lo.json",
+      "book_name": "Lexico de Ortopensatas",
+      "author": "Waldo Vieira",
+      "records": 25187,
+      "index_label": "Lexico de Ortopensatas"
+    },
+    {
+      "index_id": "proexis",
+      "file": "proexis.json",
+      "book_name": "Manual da Proexis",
+      "author": "Waldo Vieira",
+      "records": 750,
+      "index_label": "Manual da Proexis"
+    },
+    {
+      "index_id": "proj",
+      "file": "proj.json",
+      "book_name": "Projeciologia",
+      "author": "Waldo Vieira",
+      "records": 8985,
+      "index_label": "Projeciologia"
+    },
+    {
+      "index_id": "temas",
+      "file": "temas.json",
+      "book_name": "Temas da Conscienciologia",
+      "author": "Waldo Vieira",
+      "records": 721,
+      "index_label": "Temas da Conscienciologia"
+    },
+    {
+      "index_id": "tnp",
+      "file": "tnp.json",
+      "book_name": "Manual da Tenepes",
+      "author": "Waldo Vieira",
+      "records": 340,
+      "index_label": "Manual da Tenepes"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# Backend que serve a SPA React (web/). Camada fina sobre verbetes_index /
+# rename / sync — ver tools/api/. Rodar:  cd tools && python -m uvicorn api.main:app --reload
+fastapi>=0.110
+uvicorn[standard]>=0.27
