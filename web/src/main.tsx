@@ -1,5 +1,8 @@
 import "@fontsource-variable/inter";
 import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/nunito-sans";
+import "@fontsource/lora/500.css";
+import "@fontsource/lora/500-italic.css";
 import "./theme.css";
 
 import { StrictMode } from "react";

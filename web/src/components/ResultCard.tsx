@@ -47,26 +47,30 @@ export function ResultCard({
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-card-title">{hit.titulo}</h3>
-        <span className="shrink-0 text-[11px] text-muted-foreground">score {hit.score}</span>
+        <span className="text-card-body shrink-0 text-xs font-semibold text-muted-foreground">
+          score {hit.score}
+        </span>
       </div>
 
       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
         {hit.tipo === "conceito" && <Chip color={tipoColor("conceito")}>conceito</Chip>}
         {hit.especialidade && (
-          <span className="text-[12px] text-muted-foreground">{hit.especialidade}</span>
+          <span className="text-card-body text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            {hit.especialidade}
+          </span>
         )}
         <Chip color={confColor(hit.confianca)}>{hit.confianca}</Chip>
         {hit.verpon && <Chip color={VERPON_COLOR}>verpon</Chip>}
       </div>
 
       {hit.definologia && (
-        <p className="mt-2 line-clamp-2 text-[12.5px] leading-snug text-muted-foreground">
+        <p className="text-card-body mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
           {highlight(hit.definologia, query)}
         </p>
       )}
 
       {hit.fontes.length > 0 && (
-        <p className="mt-1.5 text-[10px] uppercase tracking-wide text-muted-foreground/60">
+        <p className="text-card-body mt-1.5 text-xs uppercase tracking-[0.14em] text-muted-foreground/60">
           {hit.fontes.join(" · ")}
         </p>
       )}

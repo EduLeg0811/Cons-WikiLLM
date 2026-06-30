@@ -41,7 +41,7 @@ function Shell() {
                          group-hover:drop-shadow-[0_0_8px_var(--color-primary)]"
             />
             <span className="text-brand-title">
-              Cons <span className="italic text-primary">WikiLLM</span>
+              Cons <span className="italic text-primary">Wiki LLM</span>
             </span>
           </a>
           <nav className="ml-2 flex items-center gap-1">

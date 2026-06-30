@@ -25,7 +25,7 @@ sys.path.insert(0, str(TOOLS))
 import verbetes_index as vi          # noqa: E402  (BM25 sobre os verbetes)
 from api import verbetes_io as vio   # noqa: E402
 
-app = FastAPI(title="ConsIA ● WikiLLM", version="0.1.0")
+app = FastAPI(title="ConsIA ● Wiki LLM", version="0.1.0")
 
 # Vite dev server (porta padrão 5173); ajustar/estender conforme necessário.
 app.add_middleware(
