@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence } from "motion/react";
+import { Search } from "lucide-react";
 import { toast } from "sonner";
 import { getMeta, getVerbete, search } from "../lib/api";
 import type { Meta, SearchHit, VerbeteDetail } from "../lib/types";
@@ -79,6 +80,8 @@ export function Consulta() {
 
   const open = (slug: string) => setOpenSlug(slug);
 
+  const hasSearched = dq.trim().length > 0;
+
   const espOpts = useMemo(
     () => [{ value: "", label: "Especialidade — todas" }, ...(meta?.especialidades ?? []).map((s) => ({ value: s, label: s }))],
     [meta]
@@ -90,15 +93,44 @@ export function Consulta() {
 
   return (
     <div>
-      {/* Barra de busca */}
+      {/* Hero — só antes da 1ª busca por texto (ver .agents/SKILL.md §2) */}
+      {!hasSearched && (
+        <div className="mb-12 text-center">
+          <h2 className="font-display text-5xl leading-[1.05] text-foreground sm:text-6xl">
+            Conhecimento consciencial,
+            <br />
+            <span className="italic text-primary/80">estruturado e citável.</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            Verbetes • Técnicas • Fenômenos • Obras • Conceitos
+          </p>
+        </div>
+      )}
+
+      {/* Caixa de pesquisa (ver .agents/SKILL.md §3) */}
       <div className="flex flex-wrap items-center gap-2">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Busca por conteúdo — ex.: estado vibracional, autassédio, recin grupal…"
-          className="min-w-[280px] flex-1 rounded-xl border border-border bg-card px-4 py-2.5 text-sm
-                     outline-none transition-colors focus:border-primary"
-        />
+        <div
+          className="flex w-full min-w-[280px] flex-1 items-center gap-1.5 rounded-2xl border
+                     border-border/70 bg-card/80 p-1.5 shadow-[0_4px_24px_-12px_rgba(80,70,120,0.25)]
+                     backdrop-blur sm:gap-2 sm:p-2"
+        >
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Busca por conteúdo — ex.: estado vibracional, autassédio, recin grupal…"
+            className="min-w-0 flex-1 rounded-xl bg-transparent px-3 py-2 font-display text-base
+                       text-foreground outline-none placeholder:text-muted-foreground/50 sm:px-4 sm:py-3 sm:text-lg"
+          />
+          <button
+            type="button"
+            aria-label="Pesquisar"
+            title="Pesquisar"
+            className="flex shrink-0 items-center justify-center rounded-xl bg-primary px-5 py-2.5
+                       text-primary-foreground transition hover:opacity-90 sm:px-6 sm:py-3"
+          >
+            <Search className="h-6 w-6" strokeWidth={2} />
+          </button>
+        </div>
         <select
           value={n}
           onChange={(e) => setN(Number(e.target.value))}

@@ -8,8 +8,10 @@
    bg-primary, border-border, …) leem estas variáveis; o bloco .dark sobrescreve
    os mesmos nomes e a cascata troca o tema inteiro.                            */
 @theme {
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Nunito Sans Variable", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Playfair Display Variable", ui-serif, Georgia, "Times New Roman", serif;
+  /* Fonte de destaque (cabeçalho, hero, busca) — padrão Cons-IA, ver .agents/SKILL.md */
+  --font-display: "Lora", ui-serif, Georgia, "Times New Roman", serif;
 
   /* Modo claro (default) */
   --color-background: oklch(0.98 0.01 240);
@@ -69,13 +71,6 @@
    Escala única usada em todo o app: header, leitor, cards, formulário.
    Evita tamanhos ad-hoc por componente e mantém a mesma identidade visual. */
 @layer components {
-  /* Título da marca/app no header — Lora 500, único, maior que os demais títulos */
-  .text-brand-title {
-    font-family: "Lora", ui-serif, Georgia, serif;
-    font-size: 25px;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-  }
   /* Título de página (ex.: verbete aberto no Reader) */
   .text-page-title {
     @apply font-serif text-2xl font-bold leading-tight;
