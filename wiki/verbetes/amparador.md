@@ -31,6 +31,7 @@ De *amparar* (auxiliar, proteger).
 - [[consciex]] — natureza do amparador (conceito conjugado)
 - [[assistencialidade]] · [[tenepes]] · [[ofiex]] · [[maximecanismo]]
 - [[colegio-invisivel-dos-serenoes]] — ápice serenológico do maximecanismo assistencial
+- [[monologo-psicofonico]] — fenômeno psicofônico que não ocorre sem amparador
 
 ## Fontes ingeridas
 - `corpus/lo.json` — [[lexico-de-ortopensatas|Léxico de Ortopensatas]], p. 98.

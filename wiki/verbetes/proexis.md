@@ -35,6 +35,7 @@ Neologismo-acrônimo: **pro**(programação) + **exis**(existencial).
 - [[antiproexis]] — oposto
 - [[complexis]] ↔ [[incomplexis]] — saldo da execução
 - [[morexis]] · [[ectopia-consciencial]] · [[macrossoma]]
+- [[gestacao-consciencial]] — fruto evolutivo (gescon) da proéxis · [[pecadilhos-da-mocidade]]
 
 ## Verbetes da Proexologia
 Cluster da especialidade (enriquecido a partir da Enciclopédia):

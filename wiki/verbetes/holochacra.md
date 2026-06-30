@@ -27,6 +27,7 @@ verpon: false
 - [[holossoma]] — 1 dos 4 veículos (conceito conjugado)
 - [[soma]] ↔ [[psicossoma]] — o holochacra conecta ambos
 - [[energia-consciencial]] · [[estado-vibracional]]
+- [[encapsulamento-energetico]] — técnica de conter/proteger ECs
 
 ## Verbetes da Energossomatologia
 Cluster da especialidade (energossoma/bioenergética; enriquecido a partir da Enciclopédia):

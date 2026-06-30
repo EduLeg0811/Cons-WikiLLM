@@ -23,6 +23,7 @@ verpon: false
 ## Conexões internas
 - [[soma]] · [[holochacra]] · [[psicossoma]] · [[mentalsoma]] — os 4 veículos
 - [[holossomatica]] — especialidade que o estuda
+- [[homeostase-holossomatica]] — equilíbrio hígido entre os 4 veículos
 
 ## Fontes ingeridas
 - `corpus/200teat.json` — cap. 99, p. 119.

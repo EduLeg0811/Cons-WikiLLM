@@ -28,6 +28,7 @@ verpon: false
 - [[pensene]] — a unidade que se agrega (conceito conjugado)
 - [[materpensene]] — pensene-mãe do holopensene
 - [[ofiex]] — holopensene domiciliar qualificado
+- [[pressao-holopensenica]] — influência do holopensene sobre a consciência
 
 ## Fontes ingeridas
 - `corpus/200teat.json` — 200 Teáticas, caps. 96 (p. 116), 97, 112.

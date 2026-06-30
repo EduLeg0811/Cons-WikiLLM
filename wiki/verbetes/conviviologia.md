@@ -29,6 +29,7 @@ Argumento *Holobiografológico* (DAC, *Conviviologia*, p. 536): viver evolutivam
 
 ## Conexões internas
 - [[interassistencialidade]] · [[dupla-evolutiva]] · [[grupocarma]] · [[cosmoetica]] · [[cognopolis]]
+- [[instituicoes-conscienciocentricas]] — organizações centradas na consciência
 
 ## Verbetes da Conviviologia
 Cluster da especialidade (convívio sadio/patológico entre consciências; enriquecido a partir da Enciclopédia):

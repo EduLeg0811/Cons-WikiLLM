@@ -29,6 +29,7 @@ verpon: false
 ## Conexões internas
 - [[proexis]] — a desperticidade é seu objetivo último
 - [[tenepes]] · [[assistencialidade]] — campo de atuação do desperto
+- [[dormidores-evolutivos]] — antípodas a despertar pelo discernimento
 
 ## Fontes ingeridas
 - `corpus/lo.json` — [[lexico-de-ortopensatas|Léxico de Ortopensatas]], p. 618.

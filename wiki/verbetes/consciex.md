@@ -25,6 +25,7 @@ verpon: false
 - [[amparador]] — consciex auxiliadora
 - [[ressoma]] · [[intermissao]] · [[sociex]]
 - [[congressus-subtilis]] — união parassexual invisível conscin–consciex
+- [[consciex-energivora]] — consciex assediadora que busca absorver ECs
 
 ## Fontes ingeridas
 - `corpus/hsr.json` — Homo sapiens reurbanisatus, cap. 59, p. 183.

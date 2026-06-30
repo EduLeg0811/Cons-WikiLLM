@@ -21,6 +21,7 @@ verpon: false
 ## Conexões internas
 - [[consciencioterapia]] — medir/diagnosticar → tratar (conceito conjugado)
 - [[multidimensionalidade]] · [[holossomatica]]
+- [[matematizacao-da-consciencia]] — projeto de mensurar a consciência · [[tecnica-do-detalhismo]] · [[principio-consciencial]]
 
 ## Verbetes da Conscienciometrologia
 Cluster da especialidade (medida/avaliação da consciência; enriquecido a partir da Enciclopédia):

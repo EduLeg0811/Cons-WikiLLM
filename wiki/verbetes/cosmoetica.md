@@ -26,6 +26,7 @@ verpon: false
 - [[teatica]] — a vivência cosmoética como coroamento
 - [[holocarmalidade]] · [[patopensene]] (anticosmoético)
 - [[estupro-evolutivo]] — imposição anticosmoética do saber/posicionamento (verpon)
+- [[pecadilhos-mentais]] — pequenas faltas íntimas a higienizar · [[coleiras-do-ego]]
 
 ## Verbetes da Cosmoeticologia
 Cluster da especialidade (enriquecido a partir da Enciclopédia):
