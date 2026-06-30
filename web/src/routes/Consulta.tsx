@@ -9,6 +9,7 @@ import { ResultCard } from "../components/ResultCard";
 import { Reader } from "../components/Reader";
 
 const N_OPTS = [15, 30, 60, 120];
+const N_ALL = 0; // sentinela "Todos" — resolvido para meta.total antes de buscar
 
 export function Consulta() {
   const [meta, setMeta] = useState<Meta | null>(null);
@@ -41,7 +42,8 @@ export function Consulta() {
   useEffect(() => {
     const id = ++reqId.current;
     setSearching(true);
-    search({ q: dq, esp, conf, fonte, status, verpon, tipo, n })
+    const effectiveN = n === N_ALL ? Math.max(meta?.total ?? 0, 1) : n;
+    search({ q: dq, esp, conf, fonte, status, verpon, tipo, n: effectiveN })
       .then((res) => {
         if (id !== reqId.current) return; // resposta obsoleta
         setHits(res);
@@ -56,7 +58,7 @@ export function Consulta() {
       .finally(() => {
         if (id === reqId.current) setSearching(false);
       });
-  }, [dq, esp, conf, fonte, status, verpon, tipo, n]);
+  }, [dq, esp, conf, fonte, status, verpon, tipo, n, meta]);
 
   // Carrega o verbete aberto.
   useEffect(() => {
@@ -107,6 +109,7 @@ export function Consulta() {
               {v} resultados
             </option>
           ))}
+          <option value={N_ALL}>Todos</option>
         </select>
         <button
           onClick={() => setShowFacets((s) => !s)}
