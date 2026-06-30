@@ -84,7 +84,6 @@ export function Consulta() {
                   key={h.slug}
                   hit={h}
                   active={h.slug === openSlug}
-                  query={s.dq}
                   onOpen={() => open(h.slug)}
                 />
               ))}

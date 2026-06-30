@@ -24,12 +24,10 @@ const MD_COMPONENTS = {
 export function ResultCard({
   hit,
   active,
-  query,
   onOpen,
 }: {
   hit: SearchHit;
   active: boolean;
-  query: string;
   onOpen: () => void;
 }) {
   return (
