@@ -1,26 +1,10 @@
-import { NavLink, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider, useTheme } from "./lib/theme";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { Consulta } from "./routes/Consulta";
 import { Editor } from "./routes/Editor";
 import favicon from "../favicon.svg";
-
-function NavTab({ to, children }: { to: string; children: string }) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        [
-          "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
-          isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted",
-        ].join(" ")
-      }
-    >
-      {children}
-    </NavLink>
-  );
-}
 
 function Shell() {
   const { mode } = useTheme();
@@ -41,20 +25,16 @@ function Shell() {
               className="h-12 w-12 transition-transform duration-300 group-hover:scale-110
                          group-hover:drop-shadow-[0_0_8px_color-mix(in_oklch,var(--color-primary)_40%,transparent)]"
             />
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-5">
               <span className="font-display max-w-[14rem] truncate text-3xl font-medium tracking-tight text-foreground sm:max-w-none">
-                Cons <span className="italic text-primary">Wiki LLM</span>
+                Cons <span className="italic text-primary">Wiki</span>
               </span>
-              <span className="hidden h-4 w-px bg-border sm:inline" />
+              <span className="hidden h-6 w-px bg-border sm:inline" />
               <span className="hidden font-sans text-xs uppercase tracking-[0.22em] text-muted-foreground sm:inline">
-                Wiki de Conscienciologia
+                Wiki LLM de Conscienciologia
               </span>
             </span>
           </a>
-          <nav className="ml-2 flex items-center gap-1">
-            <NavTab to="/consulta">Consulta</NavTab>
-            <NavTab to="/editor">Editor</NavTab>
-          </nav>
           <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
           </div>

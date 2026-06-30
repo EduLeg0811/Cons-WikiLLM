@@ -33,14 +33,14 @@ O cabeçalho deve seguir rigorosamente a seguinte estrutura HTML/React:
         className="h-12 w-12 transition-transform duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_color-mix(in_oklch,var(--primary)_40%,transparent)]"
       />
       {/* Bloco de Texto Alinhado Verticalmente */}
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-5">
         {/* Título Principal */}
         <span className="font-display text-3xl font-medium tracking-tight text-foreground truncate max-w-[14rem] sm:max-w-none">
           Nome<span className="italic text-primary">Projeto</span>
         </span>
 
         {/* Separador Vertical Discreto */}
-        <span className="hidden h-4 w-px bg-border sm:inline" />
+        <span className="hidden h-6 w-px bg-border sm:inline" />
 
         {/* Subtítulo / Categoria */}
         <span className="hidden font-sans text-xs uppercase tracking-[0.22em] text-muted-foreground sm:inline">
@@ -76,7 +76,8 @@ O cabeçalho deve seguir rigorosamente a seguinte estrutura HTML/React:
    - Efeito hover com escala leve (`group-hover:scale-110`) e sombra colorida/brilho no hover usando a cor primária do tema (`group-hover:drop-shadow-[0_0_8px_color-mix(in_oklch,var(--primary)_40%,transparent)]`) — nunca uma cor hardcoded, para que o brilho acompanhe automaticamente a paleta de cada projeto e o modo claro/escuro.
 
 2. **Alinhamento**:
-   - O container de texto deve usar `flex items-center gap-2` para centralizar verticalmente o título, o separador e o subtítulo, garantindo harmonia.
+   - O container de texto deve usar `flex items-center gap-5` para centralizar verticalmente o título, o separador e o subtítulo, garantindo harmonia.
+   - **Espaçamento ao redor do separador**: `gap-5` (20px) — não `gap-2` (8px). Com gap pequeno, o título, a barra divisória e o subtítulo ficam visualmente espremidos; o gap maior dá respiro de ambos os lados do traço vertical, fazendo-o de fato funcionar como um separador, não como mais um caractere colado ao texto.
 
 3. **Título Principal**:
    - **Família de Fonte**: `font-display` (Lora).
@@ -88,8 +89,9 @@ O cabeçalho deve seguir rigorosamente a seguinte estrutura HTML/React:
    - **Overflow**: `truncate` com `max-w-[14rem] sm:max-w-none` — nomes de projeto mais longos não podem quebrar o layout horizontal do cabeçalho em telas pequenas.
 
 4. **Separador Vertical**:
-   - Altura de `16px` (`h-4`), largura de `1px` (`w-px`).
+   - Altura de `24px` (`h-6`), largura de `1px` (`w-px`).
    - Cor: `bg-border` (token de tema, equivalente a `--border` em `styles.css`) — nunca `bg-gray-300`/`dark:bg-gray-600` hardcoded.
+   - Espaçamento: ver item 2 acima (`gap-5` no container pai, não `gap-2`).
    - Responsividade: Deve sumir em telas pequenas (`hidden sm:inline`).
 
 5. **Subtítulo / Categoria** (ex.: "Agregador Léxico", após o separador vertical):
