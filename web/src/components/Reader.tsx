@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import type { VerbeteDetail } from "../lib/types";
-import { Chip, confColor, statusColor, VERPON_COLOR } from "./Chip";
+import { Chip, confColor, statusColor, tipoColor, VERPON_COLOR } from "./Chip";
 import { MarkdownReader } from "../lib/markdown";
 
 export function Reader({
@@ -34,16 +34,31 @@ export function Reader({
       <h2 className="text-page-title">{e.titulo}</h2>
 
       <div className="mt-2 flex flex-wrap items-center gap-1.5">
+        {detail.tipo === "conceito" && <Chip color={tipoColor("conceito")}>conceito</Chip>}
         <Chip color={statusColor(e.status)}>{e.status}</Chip>
         <Chip color={confColor(e.confianca)}>{e.confianca}</Chip>
         {e.verpon && <Chip color={VERPON_COLOR}>verpon</Chip>}
         {e.especialidade && (
-          <span className="ml-1 text-[12px] text-muted-foreground">{e.especialidade}</span>
+          <span className="ml-1 text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            {e.especialidade}
+          </span>
         )}
       </div>
 
+      {detail.derivado_de && (
+        <p className="mt-1.5 text-xs text-muted-foreground">
+          Conceito derivado da especialidade{" "}
+          <button
+            onClick={() => onOpenSlug(detail.derivado_de)}
+            className="font-medium text-primary hover:underline"
+          >
+            {detail.derivado_de}
+          </button>
+        </p>
+      )}
+
       {detail.sources.length > 0 && (
-        <p className="mt-1.5 text-[11px] text-muted-foreground/70">
+        <p className="mt-1.5 text-xs uppercase tracking-[0.14em] text-muted-foreground/70">
           Fontes: {detail.sources.map((s) => s.titulo).join(" · ")}
         </p>
       )}
@@ -60,8 +75,9 @@ export function Reader({
               <button
                 key={l.slug}
                 onClick={() => onOpenSlug(l.slug)}
-                className="rounded-lg border border-border px-2.5 py-1 text-[12.5px]
-                           transition-colors hover:border-primary/50 hover:bg-muted"
+                className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold
+                           uppercase tracking-[0.14em] transition-colors
+                           hover:border-primary/50 hover:bg-muted"
               >
                 {l.titulo}
               </button>

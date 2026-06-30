@@ -26,8 +26,8 @@ function Shell() {
   const { mode } = useTheme();
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-[1600px] items-center gap-4 px-5 py-3">
+      <header className="sticky top-0 z-30 border-b border-border/50 bg-background/70 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1600px] items-center gap-4 px-5 py-4">
           <a
             href="https://www.cons-ia.org"
             target="_blank"
@@ -37,10 +37,11 @@ function Shell() {
             <img
               src={favicon}
               alt=""
-              className="h-12 w-12 transition-transform duration-200 group-hover:scale-110"
+              className="h-12 w-12 transition-transform duration-300 group-hover:scale-110
+                         group-hover:drop-shadow-[0_0_8px_var(--color-primary)]"
             />
-            <span className="text-section-title">
-              Wiki <span className="text-primary">Conscienciologia</span>
+            <span className="text-brand-title">
+              Cons <span className="italic text-primary">WikiLLM</span>
             </span>
           </a>
           <nav className="ml-2 flex items-center gap-1">

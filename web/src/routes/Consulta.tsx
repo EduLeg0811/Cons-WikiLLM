@@ -20,6 +20,7 @@ export function Consulta() {
   const [fonte, setFonte] = useState("");
   const [status, setStatus] = useState("");
   const [verpon, setVerpon] = useState("");
+  const [tipo, setTipo] = useState("");
   const [showFacets, setShowFacets] = useState(false);
 
   const [hits, setHits] = useState<SearchHit[]>([]);
@@ -40,7 +41,7 @@ export function Consulta() {
   useEffect(() => {
     const id = ++reqId.current;
     setSearching(true);
-    search({ q: dq, esp, conf, fonte, status, verpon, n })
+    search({ q: dq, esp, conf, fonte, status, verpon, tipo, n })
       .then((res) => {
         if (id !== reqId.current) return; // resposta obsoleta
         setHits(res);
@@ -55,7 +56,7 @@ export function Consulta() {
       .finally(() => {
         if (id === reqId.current) setSearching(false);
       });
-  }, [dq, esp, conf, fonte, status, verpon, n]);
+  }, [dq, esp, conf, fonte, status, verpon, tipo, n]);
 
   // Carrega o verbete aberto.
   useEffect(() => {
@@ -121,7 +122,16 @@ export function Consulta() {
       {/* Filtros */}
       <AnimatePresence>
         {showFacets && (
-          <div className="mt-3 grid grid-cols-2 gap-3 rounded-xl border border-border bg-card/50 p-4 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-3 grid grid-cols-2 gap-3 rounded-xl border border-border bg-card/50 p-4 sm:grid-cols-3 lg:grid-cols-6">
+            <Select
+              label="Tipo"
+              value={tipo}
+              onChange={setTipo}
+              options={[
+                { value: "", label: "todos" },
+                ...(meta?.tipos ?? []).map((t) => ({ value: t, label: t })),
+              ]}
+            />
             <Select label="Especialidade" value={esp} onChange={setEsp} options={espOpts} />
             <Select
               label="Confiança"

@@ -21,6 +21,12 @@ export function statusColor(status: string): string {
   return STATUS[status] ?? "var(--color-muted-foreground)";
 }
 
+// Conceitos (origem contextual) ganham destaque com a cor primária; demais
+// tipos (verbete literal) não recebem chip — o card é o estado default.
+export function tipoColor(tipo: string): string {
+  return tipo === "conceito" ? "var(--color-primary)" : "var(--color-muted-foreground)";
+}
+
 export const VERPON_COLOR = "var(--color-verpon)";
 
 export function Chip({

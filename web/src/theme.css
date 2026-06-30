@@ -69,11 +69,15 @@
    Escala única usada em todo o app: header, leitor, cards, formulário.
    Evita tamanhos ad-hoc por componente e mantém a mesma identidade visual. */
 @layer components {
+  /* Título da marca/app no header — único, maior que os demais títulos */
+  .text-brand-title {
+    @apply font-serif text-2xl font-bold tracking-tight;
+  }
   /* Título de página (ex.: verbete aberto no Reader) */
   .text-page-title {
     @apply font-serif text-2xl font-bold leading-tight;
   }
-  /* Título de seção/painel (ex.: logo do header, "Editando" no formulário) */
+  /* Título de seção/painel (ex.: "Editando" no formulário) */
   .text-section-title {
     @apply font-serif text-xl font-bold tracking-tight;
   }
@@ -89,14 +93,24 @@
 
 /* ---- Tipografia do leitor de verbetes (Markdown) ------------------------- */
 @layer components {
+  /* Parágrafos e texto geral: sans-serif 15px, cor levemente suavizada */
   .prose-wiki {
-    @apply text-[14px] leading-relaxed text-foreground;
+    @apply text-[15px] leading-relaxed text-foreground/85;
+  }
+  /* H1 e H2: base (16px), negrito */
+  .prose-wiki h1 {
+    @apply mt-6 mb-2 text-base font-bold;
   }
   .prose-wiki h2 {
-    @apply mt-6 mb-2 text-lg font-semibold text-primary;
+    @apply mt-6 mb-2 text-base font-bold text-primary;
   }
+  /* H3: 14px, negrito, uppercase com tracking expandido */
   .prose-wiki h3 {
-    @apply mt-4 mb-1.5 text-base font-semibold;
+    @apply mt-4 mb-1.5 text-sm font-bold uppercase tracking-[0.12em];
+  }
+  /* H4: 14px, semibold */
+  .prose-wiki h4 {
+    @apply mt-3 mb-1 text-sm font-semibold;
   }
   .prose-wiki p {
     @apply my-2.5;
@@ -107,11 +121,13 @@
   .prose-wiki ol {
     @apply my-2.5 list-decimal space-y-1 pl-5;
   }
+  /* Blockquote: sans-serif itálico, cor suavizada */
   .prose-wiki blockquote {
-    @apply my-3 border-l-2 border-primary/40 pl-3 italic text-muted-foreground;
+    @apply my-3 border-l-2 border-primary/40 pl-3 italic text-foreground/75;
   }
+  /* Código: monoespaçado, ~0.92em relativo ao body (15px → ~13.8px) */
   .prose-wiki code {
-    @apply rounded bg-muted px-1 py-0.5 font-mono text-[12.5px];
+    @apply rounded bg-muted px-1 py-0.5 font-mono text-[0.92em];
   }
   .prose-wiki a {
     @apply break-words;

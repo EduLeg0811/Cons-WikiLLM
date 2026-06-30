@@ -2,7 +2,11 @@
 
 > Catálogo orientado a conteúdo. Atualizado a cada ingest/query. Contagem entre parênteses = nº de fontes ingeridas.
 
-> **Cobertura.** Este index lista as páginas **curadas/enriquecidas** (com convergência, relações e seções desenvolvidas). Além delas, a base contém **2.602 verbetes-stub** gerados automaticamente das fontes-dicionário, aguardando enriquecimento — Enciclopédia ([`catalogo-ec.md`](catalogo-ec.md), 2.019/2.019 = 100%) e DAC ([`catalogo-dac.md`](catalogo-dac.md), 642/652 = 98,5%; conceitos-núcleo embutidos capturados como `aliases`, ex.: *Inacabamentologia* → _Inacabamento a Maior_). Métrica via `python tools/inventory.py`.
+> **Cobertura.** Este index lista as páginas **curadas/enriquecidas** (com convergência, relações e seções desenvolvidas). Além delas, a base contém **2.602 verbetes-stub** gerados automaticamente das fontes-dicionário, aguardando enriquecimento — Enciclopédia ([`catalogo-ec.md`](catalogo-ec.md), 2.019/2.019 = 100%) e DAC ([`catalogo-dac.md`](catalogo-dac.md), 642/652 = 98,5%). Métrica via `python tools/inventory.py`.
+
+## Conceitos (origem contextual)
+> Conceitos originais/relevantes — frequentemente **verpons** — extraídos da prosa argumentológica, **sem Definologia *ipsis litteris*** no headword. Ficam destacados na pasta [`conceitos/`](conceitos/) (`tipo: conceito`, `definicao: contextual`), com busca unificada. Candidatos a promover: [`lacunas-conceitos.md`](lacunas-conceitos.md) (via `tools/mine_conceitos.py`).
+- [[inacabamento-a-maior]] — saldo positivo de recursos superiores deixado conscientemente na dessoma por autoproéxis cumprida; verpon (de [[inacabamentologia]]). (1)
 
 ## Verbetes curados (107)
 - [[tenepes]] — Tarefa energética pessoal, diária, assistencial. **(verpon)** (3)

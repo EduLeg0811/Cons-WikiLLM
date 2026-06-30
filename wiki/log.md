@@ -503,3 +503,9 @@
 - **`tools/wiki_consulta.py`** (L1+UI): app Streamlit de CONSULTA (distinto do wiki_app.py, que é editor). Busca por conteúdo + facetas; resultados em cards (título · especialidade · Definologia c/ realce · fontes · score); leitor à direita com o verbete completo e botões de navegação pelos conceitos relacionados ([[links]]). `streamlit run tools/wiki_consulta.py`.
 - Puro-Python + Streamlit, sem dependências novas. Corrigido bug de frontmatter (campo vazio capturando linha seguinte via \s*) e pickle de classe (__main__ vs módulo) com rebuild defensivo.
 - Fundação pronta para L2 (grafo de [[links]]) e L3 (RAG/Claude com citação de fonte primária) quando desejado.
+
+## [2026-06-29 19:30] produto | Camada de conceitos contextuais + apps React/FastAPI
+- **Apps modernizados**: os dois Streamlit (`wiki_app.py`/`wiki_consulta.py`) foram aposentados; agora há `tools/api/` (FastAPI fino sobre `verbetes_index`/`rename`/`sync`) + SPA `web/` (React 19 · Vite 8 · Tailwind v4 OKLCH · Motion · Sonner): telas Consulta e Editor. Rodar com `pwsh dev.ps1`.
+- **Nova camada `wiki/conceitos/`** (`tipo: conceito`): conceitos originais/verpons de **origem contextual** (definidos na prosa, sem Definologia *ipsis litteris*), destacados dos verbetes literais mas na **busca unificada** (AGENTS §4.2). `verbetes_index` agora varre `verbetes/`+`conceitos/`; API/SPA expõem faceta `tipo`.
+- **Piloto**: [[inacabamento-a-maior]] promovido de `alias` do verbete [[inacabamentologia]] a página própria (DAC, p. 787, argumento *Cronologia*); especialidade passou a linkar o conceito.
+- **`tools/mine_conceitos.py`**: minera conceitos-núcleo embutidos no DAC → backlog `wiki/lacunas-conceitos.md` (curador promove; recall baixo por design). `lint.py` passou a pular `lacunas*` (como `catalogo*`).

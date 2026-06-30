@@ -8,6 +8,7 @@ export interface Fonte {
 export interface Meta {
   especialidades: string[];
   fontes: Fonte[];
+  tipos: string[];
   status_opts: string[];
   conf_opts: string[];
   area_opts: string[];
@@ -18,6 +19,7 @@ export interface SearchHit {
   score: number;
   slug: string;
   titulo: string;
+  tipo: string;
   especialidade: string;
   confianca: string;
   status: string;
@@ -34,6 +36,7 @@ export interface LinkRef {
 export interface VerbeteListItem {
   slug: string;
   titulo: string;
+  tipo: string;
   especialidade: string;
   area: string;
   status: string;
@@ -59,6 +62,7 @@ export interface Editable {
 export interface VerbeteDetail {
   slug: string;
   tipo: string;
+  derivado_de: string;
   sources: LinkRef[];
   editable: Editable;
   definologia: string;

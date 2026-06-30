@@ -27,6 +27,7 @@ export interface SearchParams {
   fonte?: string;
   status?: string;
   verpon?: string; // "", "sim", "não"/"nao"
+  tipo?: string;
   n?: number;
 }
 
@@ -38,6 +39,7 @@ export function search(p: SearchParams): Promise<SearchHit[]> {
   if (p.fonte) qs.set("fonte", p.fonte);
   if (p.status) qs.set("status", p.status);
   if (p.verpon) qs.set("verpon", p.verpon === "não" ? "nao" : p.verpon);
+  if (p.tipo) qs.set("tipo", p.tipo);
   if (p.n) qs.set("n", String(p.n));
   return getJSON<SearchHit[]>(`/api/search?${qs.toString()}`);
 }

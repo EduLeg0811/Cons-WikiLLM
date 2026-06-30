@@ -19,7 +19,10 @@ from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent.parent
 ROOT = TOOLS.parent
-VERB = ROOT / "wiki" / "verbetes"
+WIKI = ROOT / "wiki"
+VERB = WIKI / "verbetes"
+# Pastas de conteúdo editáveis: verbetes literais + conceitos contextuais.
+CONTENT_ROOTS = [WIKI / "verbetes", WIKI / "conceitos"]
 CORPUS_INDEX = ROOT / "corpus" / "index.json"
 
 EDITABLE = ["titulo", "especialidade", "area", "status", "confianca",
@@ -44,9 +47,15 @@ def book_names() -> dict[str, str]:
 
 
 def path_for(slug: str) -> Path:
-    """Caminho do verbete a partir do slug, com guarda contra path traversal."""
+    """Caminho da página a partir do slug (ID global), com guarda contra path
+    traversal. Procura nas pastas de conteúdo (verbetes/, conceitos/); se não
+    achar, devolve o caminho em verbetes/ — o chamador trata como 404."""
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug or ""):
         raise ValueError(f"slug inválido: {slug!r}")
+    for root in CONTENT_ROOTS:
+        p = root / f"{slug}.md"
+        if p.exists():
+            return p
     return VERB / f"{slug}.md"
 
 

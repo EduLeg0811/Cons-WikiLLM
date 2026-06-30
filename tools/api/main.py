@@ -25,7 +25,7 @@ sys.path.insert(0, str(TOOLS))
 import verbetes_index as vi          # noqa: E402  (BM25 sobre os verbetes)
 from api import verbetes_io as vio   # noqa: E402
 
-app = FastAPI(title="Wiki Conscienciologia API", version="0.1.0")
+app = FastAPI(title="ConsIA ● WikiLLM", version="0.1.0")
 
 # Vite dev server (porta padrão 5173); ajustar/estender conforme necessário.
 app.add_middleware(
@@ -41,6 +41,7 @@ class SearchHit(BaseModel):
     score: float
     slug: str
     titulo: str
+    tipo: str = "verbete"
     especialidade: str = ""
     confianca: str = "baixa"
     status: str = "stub"
@@ -57,6 +58,7 @@ class LinkRef(BaseModel):
 class VerbeteListItem(BaseModel):
     slug: str
     titulo: str
+    tipo: str = "verbete"
     especialidade: str = ""
     area: str = ""
     status: str = "stub"
@@ -82,6 +84,7 @@ class Editable(BaseModel):
 class VerbeteDetail(BaseModel):
     slug: str
     tipo: str
+    derivado_de: str = ""           # especialidade-hub de origem (tipo: conceito)
     sources: list[LinkRef]          # {slug: index_id, titulo: rótulo da obra}
     editable: Editable
     definologia: str = ""
@@ -105,6 +108,7 @@ def meta():
     return {
         "especialidades": vi.especialidades(),
         "fontes": [{"id": f, "label": labels.get(f, f)} for f in vi.fontes_disp()],
+        "tipos": vi.tipos(),
         "status_opts": vio.STATUS_OPTS,
         "conf_opts": vio.CONF_OPTS,
         "area_opts": vio.AREA_OPTS,
@@ -119,7 +123,7 @@ def list_verbetes():
     recs = vi.load_index()["recs"]
     items = [
         VerbeteListItem(
-            slug=r.slug, titulo=r.titulo, especialidade=r.especialidade,
+            slug=r.slug, titulo=r.titulo, tipo=r.tipo, especialidade=r.especialidade,
             area=r.area, status=r.status, confianca=r.confianca, verpon=r.verpon,
             fontes_count=r.fontes_count, fontes=r.fontes,
         )
@@ -131,13 +135,14 @@ def list_verbetes():
 
 @app.get("/api/search", response_model=list[SearchHit])
 def search(q: str = "", esp: str = "", conf: str = "", fonte: str = "",
-           status: str = "", verpon: str = "", n: int = 30):
+           status: str = "", verpon: str = "", tipo: str = "", n: int = 30):
     vp = None if verpon in ("", "todos") else (verpon in ("sim", "true", "1"))
     hits = vi.vsearch(q, n, especialidade=esp or None, confianca=conf or None,
-                      fonte=fonte or None, status=status or None, verpon=vp)
+                      fonte=fonte or None, status=status or None, verpon=vp,
+                      tipo=tipo or None)
     return [
         SearchHit(
-            score=round(s, 1), slug=r.slug, titulo=r.titulo,
+            score=round(s, 1), slug=r.slug, titulo=r.titulo, tipo=r.tipo,
             especialidade=r.especialidade, confianca=r.confianca,
             status=r.status, verpon=r.verpon, fontes=r.fontes,
             definologia=r.definologia,
@@ -174,6 +179,7 @@ def get_verbete(slug: str):
     return VerbeteDetail(
         slug=rec["slug"],
         tipo=rec["tipo"],
+        derivado_de=vrec.derivado_de if vrec else "",
         sources=[LinkRef(slug=s, titulo=labels.get(s, s)) for s in rec["sources"]],
         editable=Editable(
             titulo=e["titulo"], especialidade=e["especialidade"], area=e["area"],

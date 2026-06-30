@@ -20,9 +20,19 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-VERB = Path(__file__).resolve().parent.parent / "wiki" / "verbetes"
+WIKI = Path(__file__).resolve().parent.parent / "wiki"
+# Pastas de conteúdo indexadas pela busca unificada: verbetes literais +
+# conceitos de origem contextual (verpons/originais, ver tipo: conceito).
+ROOTS = [WIKI / "verbetes", WIKI / "conceitos"]
+VERB = ROOTS[0]   # mantido por compat. com importadores externos
 CACHE = Path(__file__).resolve().parent / ".verbete_cache.pkl"
 _TOKEN = re.compile(r"[0-9a-zà-ÿ]+")
+
+
+def _iter_md():
+    for root in ROOTS:
+        if root.exists():
+            yield from sorted(root.glob("*.md"))
 
 
 def tokens(text: str) -> list[str]:
@@ -35,6 +45,8 @@ def tokens(text: str) -> list[str]:
 class VRecord:
     slug: str
     titulo: str
+    tipo: str = "verbete"
+    derivado_de: str = ""
     aliases: list[str] = field(default_factory=list)
     especialidade: str = ""
     area: str = ""
@@ -72,6 +84,8 @@ def parse(path: Path) -> VRecord:
     return VRecord(
         slug=_fm_get(fm, "slug", path.stem),
         titulo=_fm_get(fm, "titulo", path.stem),
+        tipo=_fm_get(fm, "tipo", "verbete"),
+        derivado_de=_fm_get(fm, "derivado_de"),
         aliases=_as_list(_fm_get(fm, "aliases")),
         especialidade=_fm_get(fm, "especialidade"),
         area=_fm_get(fm, "area"),
@@ -88,11 +102,11 @@ def parse(path: Path) -> VRecord:
 
 
 def _signature() -> dict[str, float]:
-    return {p.name: p.stat().st_mtime for p in VERB.glob("*.md")}
+    return {str(p): p.stat().st_mtime for p in _iter_md()}
 
 
 def build_index() -> dict:
-    recs = [parse(p) for p in sorted(VERB.glob("*.md"))]
+    recs = [parse(p) for p in _iter_md()]
     docs = []
     for r in recs:
         # boost de campos: título/aliases pesam mais que o corpo
@@ -124,7 +138,7 @@ def load_index() -> dict:
 
 
 def vsearch(query: str, n: int = 20, *, especialidade=None, confianca=None,
-            fonte=None, status=None, verpon=None, k1=1.5, b=0.75):
+            fonte=None, status=None, verpon=None, tipo=None, k1=1.5, b=0.75):
     """BM25 sobre verbetes com facetas. Filtros None = não aplica.
     Sem query (vazia) → devolve os que casam só pelos filtros, por confiança."""
     idx = load_index()
@@ -141,6 +155,8 @@ def vsearch(query: str, n: int = 20, *, especialidade=None, confianca=None,
         if fonte and fonte not in r.fontes:
             return False
         if verpon is not None and r.verpon != verpon:
+            return False
+        if tipo and r.tipo != tipo:
             return False
         return True
 
@@ -164,6 +180,10 @@ def vsearch(query: str, n: int = 20, *, especialidade=None, confianca=None,
 
 def especialidades() -> list[str]:
     return sorted({r.especialidade for r in load_index()["recs"] if r.especialidade})
+
+
+def tipos() -> list[str]:
+    return sorted({r.tipo for r in load_index()["recs"] if r.tipo})
 
 
 def fontes_disp() -> list[str]:

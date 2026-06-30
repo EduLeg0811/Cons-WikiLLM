@@ -31,7 +31,8 @@ Idioma: **português brasileiro**. Neologismos técnicos (tenepes, conscin, cons
 ├── log.md              # linha do tempo de ingest/query/lint (orientado a tempo)
 ├── overview.md         # visão integradora atual
 ├── sintese.md          # síntese conceitual em evolução
-├── verbetes/           # páginas conceituais (formato verbetográfico)
+├── verbetes/           # páginas conceituais literais (formato verbetográfico)
+├── conceitos/          # conceitos originais/verpons de ORIGEM CONTEXTUAL (tipo: conceito)
 ├── especialidades/     # especialidades (logias) da Conscienciologia
 ├── tecnicas/           # técnicas conscienciológicas
 ├── pesquisadores/      # autores, verbetógrafos, conscienciólogos
@@ -125,6 +126,13 @@ verpon: false
 
 Páginas de **especialidades/técnicas/pesquisadores/obras/fenômenos** seguem o mesmo frontmatter (ajustando `tipo:`) e usam as seções pertinentes (uma técnica troca *Definologia/Etimologia* por *Objetivo/Procedimento/Pré-requisitos/Resultados*, etc.).
 
+### 4.2 Conceito de origem contextual (`/wiki/conceitos/<slug>.md`)
+Conceitos **originais/relevantes — em geral verpons — definidos por contexto** na prosa (argumentológica), **sem Definologia *ipsis litteris*** num headword (ex.: *Inacabamento a Maior*, embutido no verbete *Inacabamentologia* do DAC). Ficam **destacados** em `conceitos/` para não se diluírem entre os verbetes literais; permanecem na **busca unificada** (indexados junto com `verbetes/`), marcados por `tipo`.
+
+Frontmatter adiciona `tipo: conceito`, `derivado_de: <slug-da-especialidade-hub>` e `definicao: contextual`. O template troca a Definologia ipsis litteris por uma **síntese contextual entre aspas + citação** e exige a seção `## Passagem-fonte` (o trecho original). O conceito **não** é alias da especialidade: a -logia é o hub e linka `[[o-conceito]]`.
+
+> **Distinção:** `verpon: true` é *flag* transversal (verbetes literais também podem ser verpon); a pasta `conceitos/` é *categoria de origem* (contextual × dicionário). Critério de entrada: origem contextual, não a flag.
+
 ---
 
 ## 5. Operações
@@ -153,6 +161,8 @@ Há **dois regimes de ingest**, conforme a natureza da fonte:
 8. **Detecção de contradições** — se a fonte contradiz o wiki, criar seção `## Controvérsias` citando ambas.
 
 > **Novas fontes em `/raw`**: converter para o formato do corpus (`{text, title, pagina, …}`, ver `corpus/index.json`) e registrar a obra em `corpus/index.json` **antes** de ingerir. A conversão de formato é tarefa de Python, não de LLM.
+
+> **Conceitos sem headword (§4.2).** O regime B produz conceitos originais/verpons *definidos por contexto*, sem entrada própria na fonte-dicionário — eles caem no vão entre A e B. Quando um conceito assim for relevante, **promovê-lo a página própria em `conceitos/`** (`tipo: conceito`), cruzando com a especialidade-hub; não enterrá-lo como `alias`. O `mine_conceitos.py` levanta candidatos do DAC (§8).
 
 ### 5.2 Query — named templates
 | Comando | Ação |
@@ -201,6 +211,7 @@ Trabalho **fixo/determinístico** é Python; trabalho **semântico/de julgamento
 | `tools/converge.py` | **Busca de convergência por conceito** (acelera o enriquecimento por tier): para cada stub de uma especialidade, roda BM25 excluindo a fonte de origem e devolve candidatos a 2ª fonte com citação pronta + marca de força (★), filtrando listas/taxonomias. O LLM só escolhe e redige. | `python tools/converge.py --esp Recexologia [-o cand.txt]` |
 | `tools/build_stubs.py` | **Gera stubs em massa** de uma fonte-dicionário (`--book ec\|dac`) + `catalogo-<book>.md` (dá inbound aos stubs). EC: Definologia ipsis litteris. DAC: argumento-líder + detecção do conceito-núcleo embutido como `alias` (n-grama recorrente cuja raiz bate com o título, ex.: *Inacabamentologia*→_Inacabamento a Maior_). Não sobrescreve curadas. | `python tools/build_stubs.py --book dac [--dry-run]` |
 | `tools/sync_index_counts.py` | Sincroniza as contagens `(N)` do `index.md` com o `fontes_count` real do frontmatter. Rodar após cada convergência. | `python tools/sync_index_counts.py [--check]` |
+| `tools/mine_conceitos.py` | **Minera conceitos contextuais** (§4.2): detecta o conceito-núcleo embutido nos verbetes argumentológicos do DAC (reusa `core_concept`) e emite um **backlog de candidatos** (`wiki/lacunas-conceitos.md`) a promover para `conceitos/`. Recall baixo por design — a relevância é julgamento (LLM/curador); não cria páginas por padrão. | `python tools/mine_conceitos.py [--emit-stubs]` |
 | `tools/lint.py` | Health-check estrutural (§5.3): links quebrados, órfãs, frontmatter, slug≠arquivo, duplicados, status/confiança. Gera `wiki/lint-reports/AAAA-MM-DD.md`. | `python tools/lint.py [--no-write]` |
 | `tools/rename.py` | Renomeia o **título** de um conceito a partir de 1 ponto (atualiza `titulo:`+`# H1`, opcional `aliases:`), varre menções na prosa para revisão (não toca citações ipsis litteris) e roda o lint. O **slug é imutável** (preserva os links). | `python tools/rename.py <slug> --titulo "Novo Nome" [--add-alias] [--apply-prose]` |
 | `tools/api/` (FastAPI) | **API** que serve a SPA: busca BM25, leitura e gravação de verbetes (dispara `rename.py`+`sync` quando o título muda). Reaproveita `verbetes_index`/`rename`/`sync_index_counts`; `verbetes_io.py` é o parse/serialize canônico. Não reimplementa nada. | `cd tools && python -m uvicorn api.main:app --reload` |

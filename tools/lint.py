@@ -37,7 +37,7 @@ def frontmatter(text: str) -> dict:
 def main():
     pages = {}  # slug(basename) -> {path, fm, links, body}
     for f in WIKI.rglob("*.md"):
-        if f.name in ("index.md", "log.md") or f.name.startswith("catalogo") \
+        if f.name in ("index.md", "log.md") or f.name.startswith(("catalogo", "lacunas")) \
                 or "lint-reports" in f.parts:
             continue
         text = f.read_text(encoding="utf-8")

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import type { SearchHit } from "../lib/types";
-import { Chip, confColor, VERPON_COLOR } from "./Chip";
+import { Chip, confColor, tipoColor, VERPON_COLOR } from "./Chip";
 
 function highlight(text: string, query: string) {
   const terms = Array.from(
@@ -51,6 +51,7 @@ export function ResultCard({
       </div>
 
       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+        {hit.tipo === "conceito" && <Chip color={tipoColor("conceito")}>conceito</Chip>}
         {hit.especialidade && (
           <span className="text-[12px] text-muted-foreground">{hit.especialidade}</span>
         )}

@@ -133,6 +133,11 @@ export function VerbeteList({
             >
               {dirty.has(r.slug) && <span className="text-primary">●</span>}
               <span className="truncate">{r.titulo}</span>
+              {r.tipo === "conceito" && (
+                <span className="ml-auto shrink-0 rounded bg-primary/15 px-1 text-[9px] font-semibold uppercase text-primary">
+                  conceito
+                </span>
+              )}
             </button>
           );
         })}
