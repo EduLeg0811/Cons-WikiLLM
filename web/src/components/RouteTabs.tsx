@@ -17,7 +17,7 @@ export function RouteTabs() {
           className={({ isActive }) =>
             [
               "rounded-full px-3 py-1 text-sm font-medium transition-colors",
-              isActive ? "bg-foreground text-background" : "text-muted-foreground hover:bg-card",
+              isActive ? "bg-tab-active-bg text-tab-active-fg shadow-sm" : "text-muted-foreground hover:bg-card",
             ].join(" ")
           }
         >

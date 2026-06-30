@@ -74,9 +74,9 @@ export function SearchToolbar(props: {
         {heroVisible && (
           <div className="mb-12 text-center">
             <h2 className="font-display text-5xl leading-[1.05] text-foreground sm:text-6xl">
-              Conscienciologia estruturada,
+              Second brain
               <br />
-              <span className="italic text-primary/80">second brain ontológico.</span>
+              <span className="italic text-primary/80">conscienciológico.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
               Verbetes • Técnicas • Fenômenos • Obras • Conceitos
