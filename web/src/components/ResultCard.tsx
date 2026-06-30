@@ -1,24 +1,25 @@
 import { motion } from "motion/react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import type { SearchHit } from "../lib/types";
 import { Chip, confColor, tipoColor, VERPON_COLOR } from "./Chip";
 
-function highlight(text: string, query: string) {
-  const terms = Array.from(
-    new Set(query.toLowerCase().split(/\s+/).filter((t) => t.length >= 3))
-  );
-  if (!terms.length) return text;
-  const re = new RegExp(`(${terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "gi");
-  const parts = text.split(re);
-  return parts.map((p, i) =>
-    re.test(p) ? (
-      <mark key={i} className="bg-primary/25 text-foreground">
-        {p}
-      </mark>
-    ) : (
-      <span key={i}>{p}</span>
-    )
-  );
-}
+// Componentes que achatam elementos de bloco para inline, adequado para
+// o preview line-clamp-2 dos cards.
+const MD_COMPONENTS = {
+  p: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+  h1: ({ children }: { children?: React.ReactNode }) => <strong>{children} </strong>,
+  h2: ({ children }: { children?: React.ReactNode }) => <strong>{children} </strong>,
+  h3: ({ children }: { children?: React.ReactNode }) => <em>{children} </em>,
+  h4: ({ children }: { children?: React.ReactNode }) => <em>{children} </em>,
+  ul: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+  ol: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+  li: ({ children }: { children?: React.ReactNode }) => <span>{children} </span>,
+  blockquote: ({ children }: { children?: React.ReactNode }) => <em className="text-foreground/70">{children}</em>,
+  code: ({ children }: { children?: React.ReactNode }) => (
+    <code className="rounded bg-muted px-0.5 font-mono text-[0.9em]">{children}</code>
+  ),
+};
 
 export function ResultCard({
   hit,
@@ -64,9 +65,11 @@ export function ResultCard({
       </div>
 
       {hit.definologia && (
-        <p className="text-card-body mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-          {highlight(hit.definologia, query)}
-        </p>
+        <div className="text-card-body mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>
+            {hit.definologia}
+          </ReactMarkdown>
+        </div>
       )}
 
       {hit.fontes.length > 0 && (
