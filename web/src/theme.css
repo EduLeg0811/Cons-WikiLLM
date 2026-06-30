@@ -15,7 +15,7 @@
   --color-background: oklch(0.98 0.01 240);
   --color-foreground: oklch(0.12 0.01 240);
   --color-card: oklch(1 0 0);
-  --color-primary: oklch(0.55 0.16 140);
+  --color-primary: oklch(0.55 0.16 250);
   --color-primary-foreground: oklch(0.98 0.01 240);
   --color-muted: oklch(0.94 0.01 240);
   --color-muted-foreground: oklch(0.45 0.01 240);
@@ -28,12 +28,12 @@
   --color-verpon: oklch(0.55 0.10 30);
 }
 
-/* Modo escuro: grafite azulado + verde-ácido elétrico */
+/* Modo escuro: grafite azulado + azul elétrico */
 .dark {
   --color-background: oklch(0.14 0.005 260);
   --color-foreground: oklch(0.97 0.005 260);
   --color-card: oklch(0.17 0.006 260);
-  --color-primary: oklch(0.92 0.18 124);
+  --color-primary: oklch(0.75 0.18 250);
   --color-primary-foreground: oklch(0.14 0.005 260);
   --color-muted: oklch(0.22 0.008 260);
   --color-muted-foreground: oklch(0.65 0.012 260);
