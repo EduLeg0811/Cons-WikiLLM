@@ -7,6 +7,12 @@
 ## Conceitos (origem contextual)
 > Conceitos originais/relevantes — frequentemente **verpons** — extraídos da prosa argumentológica, **sem Definologia *ipsis litteris*** no headword. Ficam destacados na pasta [`conceitos/`](conceitos/) (`tipo: conceito`, `definicao: contextual`), com busca unificada. Candidatos a promover: [`lacunas-conceitos.md`](lacunas-conceitos.md) (via `tools/mine_conceitos.py`).
 - [[inacabamento-a-maior]] — saldo positivo de recursos superiores deixado conscientemente na dessoma por autoproéxis cumprida; verpon (de [[inacabamentologia]]). (1)
+- [[atacadismo-consciencial]] — priorizar o todo/maior/essencial (megatrafores) ante o varejismo consciencial. (2)
+- [[segunda-dessoma]] — desativação do psicossoma no extrafísico; a "segunda morte", coroação da existência. (1)
+- [[congressus-subtilis]] — união parassexual invisível de conscin com consciex durante o repouso físico. (1)
+- [[colegio-invisivel-dos-serenoes]] — colégio invisível mais evoluído; superintende a evolução do Planeta. (1)
+- [[estupro-evolutivo]] — imposição anticosmoética do saber/posicionamento sobre outra consciência; verpon. (1)
+- [[cordao-de-prata]] — vínculo paranatômico que liga soma e psicossoma na projeção consciencial. (1)
 
 ## Verbetes curados (107)
 - [[tenepes]] — Tarefa energética pessoal, diária, assistencial. **(verpon)** (3)

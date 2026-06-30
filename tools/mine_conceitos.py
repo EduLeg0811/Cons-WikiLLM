@@ -17,8 +17,9 @@ Uso:
 """
 from __future__ import annotations
 import argparse
+import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 
@@ -30,6 +31,14 @@ WIKI = Path(__file__).resolve().parent.parent / "wiki"
 CONCEITOS = WIKI / "conceitos"
 BACKLOG = WIKI / "lacunas-conceitos.md"
 TODAY = date.today().isoformat()
+
+# Palavras-função: se um termo em itálico COMEÇA ou TERMINA com uma delas, é
+# quase sempre fragmento de prosa em ênfase, não conceito ("O ato de", "Segundo a").
+_EDGE_STOP = {"a", "o", "os", "as", "e", "de", "da", "do", "das", "dos", "ao", "aos",
+              "na", "no", "nas", "nos", "em", "com", "por", "para", "sem", "sob",
+              "ate", "entre", "que", "se", "ou", "the", "of", "segundo", "quanto",
+              "conforme", "tal", "tao", "como", "mais", "menos", "muito"}
+_ITAL = re.compile(r"\*([^*]{4,60}?)\*")
 
 
 def existing_slugs() -> set[str]:
@@ -117,27 +126,94 @@ gerado: auto
 """
 
 
-def main():
-    ap = argparse.ArgumentParser(description="Minera conceitos contextuais (DAC).")
-    ap.add_argument("--book", default="dac", choices=["dac"])
-    ap.add_argument("--emit-stubs", action="store_true",
-                    help="cria stubs em wiki/conceitos/ (usar com parcimônia)")
-    a = ap.parse_args()
-    if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8")
+def _good_term(words: list[str]) -> bool:
+    if not (2 <= len(words) <= 5):
+        return False
+    if words[0] in _EDGE_STOP or words[-1] in _EDGE_STOP:   # fragmento de prosa
+        return False
+    if not any(len(w) >= 6 for w in words):                # exige 1 palavra "densa"
+        return False
+    return True
 
-    have = wiki_titles()           # títulos/slugs/aliases já cobertos
-    used = existing_slugs()
-    novos, ja, emitidos = [], 0, 0
-    seen = set()
 
-    for c in candidates(a.book):
+def neologism_candidates(min_freq: int = 3, min_sources: int = 2):
+    """Neologismos em itálico (*termo*) recorrentes em ≥N fontes, sem página.
+
+    Sinal tipográfico que o autor usa p/ conceitos cunhados — generaliza a TODAS
+    as fontes (vs. o n-grama do `core_concept`, preso à estrutura -logia do DAC).
+    Ranking por convergência (nº de fontes) e frequência.
+    """
+    freq: Counter = Counter()
+    books: dict[str, set] = defaultdict(set)
+    disp: dict[str, str] = {}
+    psg: dict[str, tuple] = {}      # k -> (len_texto, excerpt, book_name, book_id, page)
+    for r in iter_records():
+        for m in _ITAL.finditer(r.text):
+            raw = m.group(1).strip(" ,.;:")
+            if not re.fullmatch(r"[A-Za-zà-ÿ ]+", raw):
+                continue
+            words = [norm(w) for w in raw.split()]
+            if not _good_term(words):
+                continue
+            k = norm(raw)
+            if len(k) < 8:
+                continue
+            freq[k] += 1
+            books[k].add(r.book)
+            disp.setdefault(k, raw)
+            cur = psg.get(k)
+            if cur is None or len(r.text) < cur[0]:
+                psg[k] = (len(r.text), r.text.strip(), r.book_name, r.book, r.page)
+    out = []
+    for k, n in freq.items():
+        if n < min_freq or len(books[k]) < min_sources:
+            continue
+        _, excerpt, bname, bid, page = psg[k]
+        out.append(dict(conceito=disp[k], slug=slugify(disp[k]), freq=n,
+                        n_fontes=len(books[k]), fontes=sorted(books[k]),
+                        book_name=bname, book_id=bid, page=page, passagem=excerpt))
+    out.sort(key=lambda c: (-c["n_fontes"], -c["freq"]))
+    return out
+
+
+def write_neologisms(a, have: set[str], used: set[str]):
+    novos, ja, seen = [], 0, set()
+    for c in neologism_candidates(a.min_freq, a.min_fontes):
         k = norm(c["conceito"])
         if k in seen:
             continue
         seen.add(k)
-        # já é página/alias? (ex.: inacabamento-a-maior, já promovido) -> não sugere
-        if k in have or c["slug"] in used:
+        if k in have or c["slug"] in used:    # já é página/alias -> vira nota, não candidato
+            ja += 1
+            continue
+        novos.append(c)
+
+    L = ["# Backlog de conceitos — neologismos em itálico (todas as fontes)",
+         f"\n> Gerado por `tools/mine_conceitos.py --neologisms` em {TODAY}. "
+         f"{len(novos)} candidatos (freq≥{a.min_freq}, ≥{a.min_fontes} fontes; já cobertos/aliases: {ja}).",
+         "> Sinal: termos *em itálico* recorrentes **sem página própria**, ordenados por "
+         "convergência (nº de fontes) e frequência.",
+         "> Promova os relevantes para `wiki/conceitos/` (`tipo: conceito`). "
+         "**Atenção:** alguns já existem sob outro nome → viram **alias**, não página nova.\n"]
+    for c in novos:
+        page = f", p. {c['page']}" if c["page"] else ""
+        L.append(f"- **{c['conceito']}**  `{c['slug']}` — {c['n_fontes']} fontes · {c['freq']} ocorr.")
+        if c["passagem"]:
+            ex = c["passagem"][:280] + ("…" if len(c["passagem"]) > 280 else "")
+            L.append(f"  > \"{ex}\" — {c['book_name']}{page}.")
+    BACKLOG.write_text("\n".join(L) + "\n", encoding="utf-8")
+    print(f"[neologisms] candidatos: {len(novos)}  ·  já cobertos/aliases: {ja}  ·  "
+          f"backlog: {BACKLOG.relative_to(WIKI.parent)}")
+
+
+def write_dac(a, have: set[str], used: set[str]):
+    novos, ja, emitidos, seen = [], 0, 0, set()
+    for c in candidates("dac"):
+        k = norm(c["conceito"])
+        if k in seen:
+            continue
+        seen.add(k)
+        if k in have or c["slug"] in used:    # já é página/alias (ex.: inacabamento-a-maior)
             ja += 1
             continue
         novos.append(c)
@@ -148,7 +224,7 @@ def main():
             emitidos += 1
 
     novos.sort(key=lambda c: c["logia_title"].lower())
-    L = [f"# Backlog de conceitos contextuais — candidatos ({a.book.upper()})",
+    L = ["# Backlog de conceitos contextuais — embutidos no DAC (core_concept)",
          f"\n> Gerado por `tools/mine_conceitos.py` em {TODAY}. {len(novos)} candidatos "
          f"(já promovidos/cobertos: {ja}).",
          "> Conceitos-núcleo embutidos em verbetes argumentológicos, **sem página própria**. "
@@ -158,12 +234,33 @@ def main():
         L.append(f"- **{c['conceito']}**  `{c['slug']}` — de [[{c['logia_slug']}]] "
                  f"(*{c['logia_title']}*{page})")
         if c["passagem"]:
-            excerpt = c["passagem"][:300] + ("…" if len(c["passagem"]) > 300 else "")
-            L.append(f"  > \"{excerpt}\"")
+            ex = c["passagem"][:300] + ("…" if len(c["passagem"]) > 300 else "")
+            L.append(f"  > \"{ex}\"")
     BACKLOG.write_text("\n".join(L) + "\n", encoding="utf-8")
-
-    print(f"[{a.book}] candidatos novos: {len(novos)}  ·  já cobertos: {ja}  ·  "
+    print(f"[dac] candidatos novos: {len(novos)}  ·  já cobertos: {ja}  ·  "
           f"stubs emitidos: {emitidos}  ·  backlog: {BACKLOG.relative_to(WIKI.parent)}")
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Minera conceitos contextuais (verpons/originais).")
+    ap.add_argument("--neologisms", action="store_true",
+                    help="modo neologismos em itálico, TODAS as fontes (recomendado)")
+    ap.add_argument("--book", default="dac", choices=["dac"],
+                    help="modo DAC: conceito-núcleo embutido via core_concept")
+    ap.add_argument("--min-freq", type=int, default=3, help="freq mínima (modo neologisms)")
+    ap.add_argument("--min-fontes", type=int, default=2, help="nº mínimo de fontes (modo neologisms)")
+    ap.add_argument("--emit-stubs", action="store_true",
+                    help="modo DAC: cria stubs em wiki/conceitos/ (usar com parcimônia)")
+    a = ap.parse_args()
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+
+    have = wiki_titles()           # títulos/slugs/aliases já cobertos
+    used = existing_slugs()
+    if a.neologisms:
+        write_neologisms(a, have, used)
+    else:
+        write_dac(a, have, used)
 
 
 if __name__ == "__main__":

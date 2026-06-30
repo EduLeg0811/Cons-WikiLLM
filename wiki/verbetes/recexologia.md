@@ -24,6 +24,7 @@ gerado: auto
 ## Conexões internas
 - [[assertivologia]] — Assertivologia
 - [[curso-intermissivo]] — Curso Intermissivo
+- [[atacadismo-consciencial]] — priorizar o atacado evolutivo (ante o varejismo consciencial)
 
 ## Fontes ingeridas
 - `corpus/dac.json` — Dicionário de Argumentos da Conscienciologia, verbete *Recexologia*, p. 1301.

@@ -13,7 +13,7 @@ function Shell() {
       <header className="sticky top-0 z-30 border-b border-border/50 bg-card/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1600px] items-center gap-4 px-6 py-5">
           <a
-            href="https://www.cons-ia.org"
+            href="https://cons-ia-gallery.onrender.com/gallery.html"
             target="_blank"
             rel="noopener noreferrer"
             title="Voltar à página inicial"

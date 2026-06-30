@@ -23,6 +23,7 @@ verpon: false
 ## Conexões internas
 - [[soma]] — veículo desativado (conceito conjugado)
 - [[ressoma]] — processo inverso (renascimento) · [[intermissao]] · [[seriexis]]
+- [[segunda-dessoma]] — desativação do psicossoma no extrafísico (a "segunda morte")
 
 ## Fontes ingeridas
 - `corpus/hsp.json` — Homo sapiens pacificus, cap. 51.

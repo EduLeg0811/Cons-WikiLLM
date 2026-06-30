@@ -25,6 +25,7 @@ verpon: false
 ## Conexões internas
 - [[teatica]] — a vivência cosmoética como coroamento
 - [[holocarmalidade]] · [[patopensene]] (anticosmoético)
+- [[estupro-evolutivo]] — imposição anticosmoética do saber/posicionamento (verpon)
 
 ## Verbetes da Cosmoeticologia
 Cluster da especialidade (enriquecido a partir da Enciclopédia):

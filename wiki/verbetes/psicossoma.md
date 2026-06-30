@@ -27,6 +27,7 @@ verpon: false
 ## Conexões internas
 - [[holossoma]] — 1 dos 4 veículos (conceito conjugado)
 - [[holochacra]] · [[mentalsoma]] · [[soma]]
+- [[cordao-de-prata]] — vínculo paranatômico do psicossoma ao soma na projeção
 
 ## Verbetes da Psicossomatologia
 Cluster da especialidade (paracorpo emocional/afetivo; enriquecido a partir da Enciclopédia):

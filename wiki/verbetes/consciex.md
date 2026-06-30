@@ -24,6 +24,7 @@ verpon: false
 - [[conscin]] — consciência intrafísica; estado conjugado (conceito conjugado)
 - [[amparador]] — consciex auxiliadora
 - [[ressoma]] · [[intermissao]] · [[sociex]]
+- [[congressus-subtilis]] — união parassexual invisível conscin–consciex
 
 ## Fontes ingeridas
 - `corpus/hsr.json` — Homo sapiens reurbanisatus, cap. 59, p. 183.

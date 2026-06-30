@@ -30,6 +30,7 @@ De *amparar* (auxiliar, proteger).
 ## Conexões internas
 - [[consciex]] — natureza do amparador (conceito conjugado)
 - [[assistencialidade]] · [[tenepes]] · [[ofiex]] · [[maximecanismo]]
+- [[colegio-invisivel-dos-serenoes]] — ápice serenológico do maximecanismo assistencial
 
 ## Fontes ingeridas
 - `corpus/lo.json` — [[lexico-de-ortopensatas|Léxico de Ortopensatas]], p. 98.

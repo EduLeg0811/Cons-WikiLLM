@@ -50,21 +50,8 @@ export function Consulta() {
 
   return (
     <div>
-      {/* Hero — só antes da 1ª busca por texto (ver .agents/SKILL.md §2) */}
-      {!hasSearched && (
-        <div className="mb-12 text-center">
-          <h2 className="font-display text-5xl leading-[1.05] text-foreground sm:text-6xl">
-            Conscienciologia estruturada,
-            <br />
-            <span className="italic text-primary/80">second brain ontológico.</span>
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Verbetes • Técnicas • Fenômenos • Obras • Conceitos
-          </p>
-        </div>
-      )}
-
       <SearchToolbar
+        showHero={!hasSearched}
         meta={s.meta}
         q={s.q}
         setQ={s.setQ}

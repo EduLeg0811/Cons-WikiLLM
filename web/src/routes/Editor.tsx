@@ -93,6 +93,8 @@ export function Editor() {
     if (ok) s.refresh(); // títulos/contagens podem ter mudado
   };
 
+  const hasSearched = s.dq.trim().length > 0;
+
   const countLabel = s.searching
     ? "buscando…"
     : `${s.hits.length} resultado(s)` + (!s.q && s.meta ? ` · de ${s.meta.total} verbetes` : "");
@@ -100,6 +102,7 @@ export function Editor() {
   return (
     <div>
       <SearchToolbar
+        showHero={!hasSearched}
         meta={s.meta}
         q={s.q}
         setQ={s.setQ}

@@ -1,9 +1,10 @@
 import { AnimatePresence } from "motion/react";
 import { Search } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Select } from "./Select";
 import { RouteTabs } from "./RouteTabs";
 import { N_ALL, N_OPTS } from "../lib/useVerbeteSearch";
+import { hasEverSearched, markSearched } from "../lib/heroState";
 import type { Meta } from "../lib/types";
 
 // Barra de busca + facetas + botões Consulta/Editor, compartilhada pelas
@@ -30,11 +31,33 @@ export function SearchToolbar(props: {
   showFacets: boolean;
   setShowFacets: (v: boolean) => void;
   countLabel: string;
+  showHero?: boolean;
 }) {
   const {
     meta, q, setQ, n, setN, esp, setEsp, conf, setConf, fonte, setFonte,
     status, setStatus, verpon, setVerpon, tipo, setTipo, showFacets, setShowFacets, countLabel,
+    showHero = false,
   } = props;
+
+  // showHero (prop) apenas indica o estado local da rota — mas uma vez que
+  // hasEverSearched() for true (flag de módulo), o hero fica oculto em
+  // qualquer rota, mesmo que a prop ainda diga true.
+  const heroVisible = showHero && !hasEverSearched();
+
+  const [inputVal, setInputVal] = useState(q);
+  // Força re-render ao submeter para que heroVisible seja reavaliado.
+  const [, setTick] = useState(0);
+
+  const handleInputChange = (val: string) => {
+    setInputVal(val);
+    if (!heroVisible) setQ(val);
+  };
+
+  const submitSearch = () => {
+    markSearched();
+    setQ(inputVal);
+    setTick((t) => t + 1);
+  };
 
   const espOpts = useMemo(
     () => [{ value: "", label: "Especialidade — todas" }, ...(meta?.especialidades ?? []).map((s) => ({ value: s, label: s }))],
@@ -47,6 +70,21 @@ export function SearchToolbar(props: {
 
   return (
     <div>
+      <AnimatePresence>
+        {heroVisible && (
+          <div className="mb-12 text-center">
+            <h2 className="font-display text-5xl leading-[1.05] text-foreground sm:text-6xl">
+              Conscienciologia estruturada,
+              <br />
+              <span className="italic text-primary/80">second brain ontológico.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+              Verbetes • Técnicas • Fenômenos • Obras • Conceitos
+            </p>
+          </div>
+        )}
+      </AnimatePresence>
+
       <div className="flex flex-wrap items-center gap-2">
         <div
           className="flex w-full min-w-[280px] flex-1 items-center gap-1.5 rounded-2xl border
@@ -54,8 +92,9 @@ export function SearchToolbar(props: {
                      backdrop-blur sm:gap-2 sm:p-2"
         >
           <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
+            value={inputVal}
+            onChange={(e) => handleInputChange(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && submitSearch()}
             placeholder="Busca por conteúdo — ex.: estado vibracional, autassédio, recin grupal…"
             className="min-w-0 flex-1 rounded-xl bg-transparent px-3 py-2 font-display text-base
                        text-foreground outline-none placeholder:text-muted-foreground/50 sm:px-4 sm:py-3 sm:text-lg"
@@ -64,6 +103,7 @@ export function SearchToolbar(props: {
             type="button"
             aria-label="Pesquisar"
             title="Pesquisar"
+            onClick={submitSearch}
             className="flex shrink-0 items-center justify-center rounded-xl bg-primary px-5 py-2.5
                        text-primary-foreground transition hover:opacity-90 sm:px-6 sm:py-3"
           >
