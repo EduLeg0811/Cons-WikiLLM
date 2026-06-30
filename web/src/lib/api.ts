@@ -1,6 +1,10 @@
 // Cliente da API. A SPA nunca toca disco nem reimplementa BM25/rename —
-// só consome o JSON servido pelo FastAPI (proxied em /api pelo Vite).
-
+// só consome o JSON servido pelo FastAPI.
+//
+// Em dev, o Vite faz proxy de /api -> localhost:8000 (vite.config.ts), então
+// VITE_API_URL fica vazio e as chamadas usam caminho relativo.
+// Em produção com API e SPA em serviços/domínios separados (ex.: Render),
+// defina VITE_API_URL com a URL completa da API (sem barra final) no build.
 import type {
   Meta,
   SearchHit,
@@ -10,8 +14,10 @@ import type {
   SaveResult,
 } from "./types";
 
+const API_BASE = import.meta.env.VITE_API_URL ?? "";
+
 async function getJSON<T>(url: string): Promise<T> {
-  const res = await fetch(url);
+  const res = await fetch(`${API_BASE}${url}`);
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
   return res.json() as Promise<T>;
 }
@@ -48,7 +54,7 @@ export const getVerbete = (slug: string) =>
   getJSON<VerbeteDetail>(`/api/verbete/${encodeURIComponent(slug)}`);
 
 export async function saveVerbete(slug: string, ed: Editable): Promise<SaveResult> {
-  const res = await fetch(`/api/verbete/${encodeURIComponent(slug)}`, {
+  const res = await fetch(`${API_BASE}/api/verbete/${encodeURIComponent(slug)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(ed),

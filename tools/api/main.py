@@ -12,6 +12,7 @@ Rodar:  uvicorn api.main:app --reload --port 8000   (a partir de tools/)
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -27,10 +28,12 @@ from api import verbetes_io as vio   # noqa: E402
 
 app = FastAPI(title="ConsIA ● Wiki LLM", version="0.1.0")
 
-# Vite dev server (porta padrão 5173); ajustar/estender conforme necessário.
+# Origens permitidas: dev (Vite) + produção via env var CORS_ORIGINS
+# (lista separada por vírgula, ex.: "https://cons-wikillm.onrender.com").
+_extra_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", *_extra_origins],
     allow_methods=["GET", "PUT", "OPTIONS"],
     allow_headers=["*"],
 )

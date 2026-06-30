@@ -1,0 +1,28 @@
+services:
+  # API FastAPI (BM25 + leitura/escrita dos verbetes em wiki/)
+  - type: web
+    name: cons-wikillm-api
+    runtime: python
+    rootDir: tools
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CORS_ORIGINS
+        value: https://cons-wikillm.onrender.com
+    # Sem disco persistente, edições feitas pelo Editor (PUT /api/verbete)
+    # não sobrevivem a redeploys/restarts. Adicione um disk em Settings se precisar.
+
+  # SPA React/Vite servida como site estático
+  - type: web
+    name: conswiki
+    runtime: static
+    rootDir: web
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://cons-wikillm-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
